@@ -1,15 +1,15 @@
 author = 'KSugonyakin'
 
-import telebot
 import logging
 import os
 
+import telebot
 
 token = os.environ['TELEGRAM_TOKEN']
 api_token = os.environ['SOME_API_TOKEN']
 
 logger = telebot.logger
-telebot.logger.setLevel(logging.ERROR) # Outputs debug messages to console.
+telebot.logger.setLevel(logging.CRITICAL)  # Outputs debug messages to console.
 bot = telebot.AsyncTeleBot(token + ":" + api_token)
 
 
