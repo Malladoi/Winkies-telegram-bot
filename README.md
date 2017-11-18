@@ -1,2 +1,2 @@
-# Winkies bot 2 2ch/by
+# Winkies bot 4 2ch/by
 # on dev
