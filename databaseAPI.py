@@ -37,7 +37,7 @@ def getserverversion(conn: psycopg2._ext.connection):
 def recreatedb(conn: psycopg2._ext.connection):
     recreatecommands = (
         """
-        DROP TABLE IF NOT EXISTS vendors, issues CASCADE 
+        DROP TABLE IF EXISTS vendors, issues CASCADE 
         """,
         """
         CREATE TABLE IF NOT EXISTS vendors (
