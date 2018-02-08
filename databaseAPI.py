@@ -1,11 +1,12 @@
 author = 'KSugonyakin'
 
 import psycopg2
+from psycopg2 import extensions as ext
 import os
 
 
-def checkConnection(conn: psycopg2._ext.connection):
-        return conn.status
+def getServerVersion(conn: psycopg2._ext.connection):
+        return conn.server_version()
     # cur = conn.cursor()
 
 # cur.execute("""
