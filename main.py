@@ -1,9 +1,21 @@
 author = 'KSugonyakin'
 
+import psycopg2
 import logging
 import os
 import telebot
 import databaseAPI
+from urllib import parse
+
+parse.uses_netloc.append("postgres")
+heroku_db_url = parse.urlparse(os.environ['DATABASE_URL'])
+conn = psycopg2.connect(
+    database=heroku_db_url.path[1:],
+    user=heroku_db_url.username,
+    password=heroku_db_url.password,
+    host=heroku_db_url.hostname,
+    port=heroku_db_url.port
+)
 
 token = os.environ['TELEGRAM_TOKEN']
 api_token = os.environ['SOME_API_TOKEN']
@@ -14,7 +26,8 @@ bot = telebot.AsyncTeleBot(token + ":" + api_token)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
+    # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
+    task = bot.reply_to(message, databaseAPI.checkConnection(conn))
     # bot.reply_to(message, res)
     result = task.wait()
     print(result)
