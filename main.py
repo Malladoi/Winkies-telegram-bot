@@ -21,6 +21,7 @@ conn = psycopg2.connect(
     port=heroku_db_url.port
 )
 
+
 logger = telebot.logger
 telebot.logger.setLevel(logging.CRITICAL)  # Outputs debug messages to console.
 bot = telebot.AsyncTeleBot(token + ":" + api_token)
