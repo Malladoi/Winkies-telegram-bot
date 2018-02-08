@@ -29,7 +29,13 @@ bot = telebot.AsyncTeleBot(token + ":" + api_token)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
+    try:
+        cur.execute("""select version()""")
+        test = cur.fetchall()[1]
+    except:
+        test = "I can't SELECT from bar"
+    # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
+    task = bot.reply_to(message, test)
     # bot.reply_to(message, res)
     result = task.wait()
     print(result)
