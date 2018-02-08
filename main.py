@@ -36,7 +36,10 @@ def send_welcome(message):
         )
         """)
     # test = cur.fetchall()[1]
-    test = "I can't SELECT from bar"
+    cur.close()
+    # commit the changes
+    conn.commit()
+    test = "table created"
     # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
     task = bot.reply_to(message, test)
     # bot.reply_to(message, res)
