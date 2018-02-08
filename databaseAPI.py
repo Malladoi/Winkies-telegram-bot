@@ -6,7 +6,7 @@ import os
 
 
 def getServerVersion(conn: psycopg2._ext.connection):
-        return conn.server_version()
+        return conn.server_version
     # cur = conn.cursor()
 
 # cur.execute("""
