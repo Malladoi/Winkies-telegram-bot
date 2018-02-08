@@ -29,10 +29,12 @@ bot = telebot.AsyncTeleBot(token + ":" + api_token)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    cur.execute("""create table brands (
-id_brand integer PRIMARY KEY
-name   varchar(40) NOT NULL CHECK (name <> '')
-)""")
+    cur.execute("""
+        CREATE TABLE vendors (
+            vendor_id SERIAL PRIMARY KEY,
+            vendor_name VARCHAR(255) NOT NULL
+        )
+        """)
     # test = cur.fetchall()[1]
     test = "I can't SELECT from bar"
     # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
