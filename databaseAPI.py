@@ -5,7 +5,7 @@ import os
 
 
 def checkConnection(conn: psycopg2._ext.connection):
-        return conn.status()
+        return conn.status
     # cur = conn.cursor()
 
 # cur.execute("""
