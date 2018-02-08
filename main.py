@@ -27,7 +27,16 @@ bot = telebot.AsyncTeleBot(token + ":" + api_token)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
-    task = bot.reply_to(message, databaseAPI.getServerVersion(conn))
+    task = bot.reply_to(message, databaseAPI.getserverversion(conn))
+    # bot.reply_to(message, res)
+    result = task.wait()
+    print(result)
+
+
+@bot.message_handler(commands=['recreatedb'])
+def send_welcome(message):
+    # task = bot.reply_to(message, "Welcome to Winkie's restaurant on Sunset Blvd")
+    task = bot.reply_to(message, databaseAPI.recreatedb(conn))
     # bot.reply_to(message, res)
     result = task.wait()
     print(result)
