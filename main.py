@@ -2,11 +2,24 @@ author = 'KSugonyakin'
 
 import logging
 import os
+from urllib import parse
 
+import psycopg2
 import telebot
 
 token = os.environ['TELEGRAM_TOKEN']
 api_token = os.environ['SOME_API_TOKEN']
+
+parse.uses_netloc.append("postgres")
+heroku_db_url = parse.urlparse(os.environ['DATABASE_URL'])
+
+conn = psycopg2.connect(
+    database=heroku_db_url.path[1:],
+    user=heroku_db_url.username,
+    password=heroku_db_url.password,
+    host=heroku_db_url.hostname,
+    port=heroku_db_url.port
+)
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.CRITICAL)  # Outputs debug messages to console.
