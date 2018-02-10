@@ -64,11 +64,11 @@ def send_welcome(message):
 
 
 # Handles all messages for which the lambda returns True
-@bot.message_handler(func=lambda message: message.document.mime_type == 'text/plain')
-def handle_text_doc(message):
-    task = bot.reply_to(message, 'Я такое не умею(')
-    result = task.wait()
-    print(result)
+# @bot.message_handler(func=lambda message: message.document.mime_type == 'text/plain')
+# def handle_text_doc(message):
+#     task = bot.reply_to(message, 'Я такое не умею(')
+#     result = task.wait()
+#     print(result)
 
 
 bot.polling(none_stop=True)
