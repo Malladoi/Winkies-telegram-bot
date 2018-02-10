@@ -33,7 +33,7 @@ def send_welcome(message):
     itembtn3 = types.KeyboardButton('Связаться с менеджером')
     markup.add(itembtn1, itembtn2, itembtn3)
     # bot.send_message(message.chat.id, "Choose one letter:", reply_markup=markup)
-    task = bot.reply_to(message, "Привет, я бот mhelp.by!\nЧем я могу Вам помочь?", )
+    task = bot.reply_to(message, "Привет, я бот mhelp.by!\nЧем я могу Вам помочь?", reply_markup=markup)
     result = task.wait()
     print(result)
 
