@@ -41,13 +41,14 @@ def send_welcome(message):
 # @bot.message_handler(commands=['Показать контактную информацию'])
 @bot.message_handler(func=lambda message: message.text == 'Показать контактную информацию')
 def send_welcome(message):
-    task = bot.reply_to(message, 'mhelp.by\n' +
-                        'Мы работаем с 9:00 до 21:00\n' +
-                        'По адресу ул. Я. Коласа 45/2\n'+
+    task = bot.reply_to(message, 'Мы работаем с 9:00 до 21:00\n' +
+                        'по адресу ул. Я. Коласа 45/2\n'+
                         'Контактные телефоны:\n' +
                         '+375259002722\n' +
                         '+375297888893\n' +
-                        '+375444811718\n')
+                        '+375444811718\n' +
+                        'Вот карта:'
+                        )
 
     # bot.reply_to(message, res)
     result = task.wait()
