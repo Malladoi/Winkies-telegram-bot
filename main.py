@@ -34,8 +34,8 @@ def send_welcome(message):
     itembtn2 = types.KeyboardButton('v')
     itembtn3 = types.KeyboardButton('d')
     markup.add(itembtn1, itembtn2, itembtn3)
-    bot.send_message(message.chat, "Choose one letter:", reply_markup=markup)
     result = task.wait()
+    bot.send_message(message.chat, "Choose one letter:", reply_markup=markup)
     print(result)
 
 
