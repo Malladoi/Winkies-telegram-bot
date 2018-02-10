@@ -27,24 +27,24 @@ bot = telebot.AsyncTeleBot(token + ":" + api_token)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    task = bot.reply_to(message, "")
-    task = bot.reply_to(message, "Привет, я бот mhelp.by")
-    markup = types.ReplyKeyboardMarkup(row_width=2)
-    itembtn1 = types.KeyboardButton('a')
-    itembtn2 = types.KeyboardButton('v')
-    itembtn3 = types.KeyboardButton('d')
+    markup = types.ReplyKeyboardMarkup(row_width=1)
+    itembtn1 = types.KeyboardButton('Помочь с ремонтом')
+    itembtn2 = types.KeyboardButton('Показать контактну информацию')
+    itembtn3 = types.KeyboardButton('Связаться с менеджером')
     markup.add(itembtn1, itembtn2, itembtn3)
-    bot.send_message(message.chat.id, "Choose one letter:", reply_markup=markup)
+    # bot.send_message(message.chat.id, "Choose one letter:", reply_markup=markup)
+    task = bot.reply_to(message, "Привет, я бот mhelp.by!\nЧем я могу Вам помочь?", )
     result = task.wait()
     print(result)
 
 
 @bot.message_handler(commands=['recreatedb'])
 def send_welcome(message):
-    task = bot.reply_to(message, databaseAPI.recreatedb(conn))
-    # bot.reply_to(message, res)
-    result = task.wait()
-    print(result)
+    if message.from_user.id == 403603722:
+        task = bot.reply_to(message, databaseAPI.recreatedb(conn))
+        # bot.reply_to(message, res)
+        result = task.wait()
+        print(result)
 
 
 bot.polling(none_stop=True)
