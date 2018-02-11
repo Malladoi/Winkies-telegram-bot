@@ -57,7 +57,8 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda message: message.text == 'Связаться с менеджером')
 def send_welcome(message):
-    markup = types.ReplyKeyboardRemove(selective=False)
+    # markup = types.ReplyKeyboardRemove(selective=False)
+    markup = types.ForceReply(selective=False)
     # bot.send_message(message.chat.id, message, reply_markup=markup)
     task = bot.reply_to(message, 'Что вы хотели узнать?', reply_markup=markup)
     result = task.wait()
