@@ -38,11 +38,10 @@ def send_welcome(message):
     print(result)
 
 
-# @bot.message_handler(commands=['Показать контактную информацию'])
 @bot.message_handler(func=lambda message: message.text == 'Показать контактную информацию')
 def send_welcome(message):
     task = bot.reply_to(message, 'Мы работаем с 9:00 до 21:00\n' +
-                        'по адресу ул. Я. Коласа 45/2\n'+
+                        'по адресу ул. Я. Коласа 45/2\n' +
                         'Контактные телефоны:\n' +
                         '+375259002722\n' +
                         '+375297888893\n' +
@@ -53,6 +52,15 @@ def send_welcome(message):
     # bot.reply_to(message, res)
     result = task.wait()
     bot.send_location(message.chat.id, 53.9290485, 27.5958024)
+    print(result)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Связаться с менеджером')
+def send_welcome(message):
+    markup = types.ReplyKeyboardRemove(selective=False)
+    # bot.send_message(message.chat.id, message, reply_markup=markup)
+    task = bot.reply_to(message, 'Что вы хотели узнать?', reply_markup=markup)
+    result = task.wait()
     print(result)
 
 
