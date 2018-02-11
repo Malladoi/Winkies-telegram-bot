@@ -77,19 +77,20 @@ def send_welcome(message):
 def echo_all(message):
     print(message.reply_to_message)
     result = bot.get_me
-    if message.from_user.is_bot is False and message.reply_to_message.text == 'Что Вы хотели узнать?':
-        ins_res = databaseAPI.registratenewrequest(conn, message)
-        markup = types.ReplyKeyboardMarkup(row_width=1)
-        itembtn1 = types.KeyboardButton('Помочь с ремонтом')
-        itembtn2 = types.KeyboardButton('Показать контактную информацию')
-        itembtn3 = types.KeyboardButton('Связаться с менеджером')
-        markup.add(itembtn1, itembtn2, itembtn3)
-        if ins_res == -1:
-            task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.',
+    if message.from_user.is_bot is False and message.reply_to_message is not None:
+        if message.reply_to_message.text == 'Что Вы хотели узнать?':
+            ins_res = databaseAPI.registratenewrequest(conn, message)
+            markup = types.ReplyKeyboardMarkup(row_width=1)
+            itembtn1 = types.KeyboardButton('Помочь с ремонтом')
+            itembtn2 = types.KeyboardButton('Показать контактную информацию')
+            itembtn3 = types.KeyboardButton('Связаться с менеджером')
+            markup.add(itembtn1, itembtn2, itembtn3)
+            if ins_res == -1:
+                task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.',
                             reply_markup=markup)
-            result = task.wait()
-        else:
-            result = ins_res
+                result = task.wait()
+            else:
+                result = ins_res
     print(result)
 
 
