@@ -88,7 +88,9 @@ def echo_all(message):
             task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.',
                             reply_markup=markup)
             result = task.wait()
-    print(result + ' ' + ins_res)
+        else:
+            result = ins_res
+    print(result)
 
 
 bot.polling(none_stop=True)
