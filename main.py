@@ -57,9 +57,7 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda message: message.text == 'Связаться с менеджером')
 def send_welcome(message):
-    # markup = types.ReplyKeyboardRemove(selective=False)
     markup = types.ForceReply(selective=False)
-    # bot.send_message(message.chat.id, message, reply_markup=markup)
     task = bot.reply_to(message, 'Что вы хотели узнать?', reply_markup=markup)
     result = task.wait()
     print(result)
@@ -75,11 +73,9 @@ def send_welcome(message):
 
 
 # Handles all messages for which the lambda returns True
-# @bot.message_handler(func=lambda message: message.document.mime_type == 'text/plain')
-# def handle_text_doc(message):
-#     task = bot.reply_to(message, 'Я такое не умею(')
-#     result = task.wait()
-#     print(result)
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    bot.reply_to(message, message.text)
 
 
 bot.polling(none_stop=True)
