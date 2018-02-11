@@ -143,7 +143,7 @@ def recreatedb(conn: psycopg2._ext.connection):
 
 def registratenewrequest(conn: psycopg2._ext.connection, message: types.Message):
     insertrequestcommand = """insert into registered_requests(request_id, status_id, user_id, request_text) 
-    values(nextval('seq_request_id'), 0, {0}, '{1)'"""
+    values(nextval('seq_request_id'), 0, {0}, '{1}'"""
     # print(datetime.datetime(message.date))
     if conn.status == 1:
         cur = conn.cursor()
