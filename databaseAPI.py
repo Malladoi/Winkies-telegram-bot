@@ -49,9 +49,14 @@ issues = [
     'Ремонт датчика приближения',
     'Замена задней крышки',
     'Ремонт кнопок громкости',
-    'Разблокировка'
+    'Разблокировка']
 
-]
+request_statuses = [
+    'Не отвечено',
+    'В процессе',
+    'Закрыто',
+    ]
+
 
 
 def getserverversion(conn: psycopg2._ext.connection):
@@ -61,7 +66,7 @@ def getserverversion(conn: psycopg2._ext.connection):
 def recreatedb(conn: psycopg2._ext.connection):
     recreatecommands = (
         """
-        DROP TABLE IF EXISTS vendors, issues CASCADE 
+        DROP TABLE IF EXISTS vendors, issues, registered_requests, request_statuses CASCADE 
         """,
         """
         CREATE TABLE IF NOT EXISTS vendors (
@@ -69,13 +74,30 @@ def recreatedb(conn: psycopg2._ext.connection):
             vendor_name VARCHAR(255) NOT NULL
         )
         """,
-        """ CREATE TABLE issues (
+        """ CREATE TABLE IF NOT EXISTS issues (
                 issue_id SERIAL PRIMARY KEY,
                 issue_name VARCHAR(255) NOT NULL
                 )
-        """)
+        """,
+        """ CREATE TABLE IF NOT EXISTS request_statuses (
+                        status_id SERIAL PRIMARY KEY,
+                        status_name VARCHAR(255) NOT NULL
+                        )
+        """,
+        """ CREATE TABLE IF NOT EXISTS registered_requests (
+                request_id SERIAL PRIMARY KEY,
+                status_id SERIAL NOT NULL,
+                user_id SERIAL NOT NULL,
+                request_text text NOT NULL,
+                FOREIGN KEY (status_id)
+                    REFERENCES request_statuses (status_id)
+                    ON UPDATE CASCADE ON DELETE CASCADE                
+                )
+        """
+    )
     insertvendorcommand = """insert into vendors(vendor_id, vendor_name) values({0}, '{1}')"""
     insertissuecommand = """insert into issues(issue_id, issue_name) values({0}, '{1}')"""
+    insertrequeststatusescommand = """insert into request_status(status_id, status_name) values({0}, '{1}')"""
     try:
         if conn.status == 1:
             cur = conn.cursor()
@@ -99,6 +121,14 @@ def recreatedb(conn: psycopg2._ext.connection):
             # create table one by one
             for i, issue in enumerate(issues):
                 cur.execute(insertissuecommand.format(i, issue))
+            cur.close()
+            # commit the changes
+            conn.commit()
+        if conn.status == 1:
+            cur = conn.cursor()
+            # create table one by one
+            for i, request_status in enumerate(request_statuses):
+                cur.execute(insertrequeststatusescommand.format(i, request_status))
             cur.close()
             # commit the changes
             conn.commit()
