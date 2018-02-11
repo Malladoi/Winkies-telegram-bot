@@ -77,7 +77,7 @@ def send_welcome(message):
 def echo_all(message):
     print(message.reply_to_message)
     result = '1'
-    if message.is_bot is False and message.reply_to_message.text == 'Что Вы хотели узнать?':
+    if message.from_user.is_bot is False and message.reply_to_message.text == 'Что Вы хотели узнать?':
         task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.')
         result = task.wait()
     print(result)
