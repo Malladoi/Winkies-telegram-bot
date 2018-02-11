@@ -97,7 +97,7 @@ def recreatedb(conn: psycopg2._ext.connection):
     )
     insertvendorcommand = """insert into vendors(vendor_id, vendor_name) values({0}, '{1}')"""
     insertissuecommand = """insert into issues(issue_id, issue_name) values({0}, '{1}')"""
-    insertrequeststatusescommand = """insert into request_status(status_id, status_name) values({0}, '{1}')"""
+    insertrequeststatusescommand = """insert into request_statuses(status_id, status_name) values({0}, '{1}')"""
     try:
         if conn.status == 1:
             cur = conn.cursor()
