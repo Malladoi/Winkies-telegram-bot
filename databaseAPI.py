@@ -144,12 +144,10 @@ def recreatedb(conn: psycopg2._ext.connection):
 def registratenewrequest(conn: psycopg2._ext.connection, message: types.Message):
     insertrequestcommand = """insert into registered_requests(request_id, status_id, user_id, request_text) 
     values(nextval('seq_request_id'), 0, {0}, '{1)'"""
-    print(datetime.datetime(message.date()))
+    print(datetime.datetime(message.date))
     if conn.status == 1:
         cur = conn.cursor()
-        # create table one by one
-        for i, request_status in enumerate(request_statuses):
-            cur.execute(insertrequestcommand.format(message.from_user, message.text))
+        cur.execute(insertrequestcommand.format(message.from_user.id, message.text))
         cur.close()
         # commit the changes
         conn.commit()
