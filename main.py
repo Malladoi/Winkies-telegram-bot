@@ -58,7 +58,7 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: message.text == 'Связаться с менеджером')
 def send_welcome(message):
     markup = types.ForceReply(selective=False)
-    task = bot.reply_to(message, 'Что вы хотели узнать?', reply_markup=markup)
+    task = bot.reply_to(message, 'Что Вы хотели узнать?', reply_markup=markup)
     result = task.wait()
     print(result)
 
@@ -75,9 +75,11 @@ def send_welcome(message):
 # Handles all messages for which the lambda returns True
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    print(message)
-    task = bot.reply_to(message, message.text)
-    result = task.wait()
+    print(message.reply_to_message)
+    result = '1'
+    if message.is_bot is False and message.reply_to_message.text == 'Что Вы хотели узнать?':
+        task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.')
+        result = task.wait()
     print(result)
 
 
