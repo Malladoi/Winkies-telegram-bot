@@ -75,7 +75,9 @@ def send_welcome(message):
 # Handles all messages for which the lambda returns True
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    bot.reply_to(message, message.text)
+    task = bot.reply_to(message, message.text)
+    result = task.wait()
+    print(result)
 
 
 bot.polling(none_stop=True)
