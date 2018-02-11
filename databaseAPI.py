@@ -1,6 +1,8 @@
 author = 'KSugonyakin'
 
 import psycopg2
+from telebot import types
+import datetime
 from psycopg2 import extensions as ext
 import os
 
@@ -93,6 +95,8 @@ def recreatedb(conn: psycopg2._ext.connection):
                     REFERENCES request_statuses (status_id)
                     ON UPDATE CASCADE ON DELETE CASCADE                
                 )
+        """,
+        """ CREATE SEQUENCE seq_request_id START 1;
         """
     )
     insertvendorcommand = """insert into vendors(vendor_id, vendor_name) values({0}, '{1}')"""
@@ -135,3 +139,18 @@ def recreatedb(conn: psycopg2._ext.connection):
         return -1
     except (Exception, psycopg2.DatabaseError) as error:
         return error
+
+
+def registratenewrequest(conn: psycopg2._ext.connection, message: types.Message):
+    insertrequestcommand = """insert into registered_requests(request_id, status_id, user_id, request_text) 
+    values(nextval('seq_request_id'), 0, {0}, '{1)'"""
+    print(datetime.datetime(message.date()))
+    if conn.status == 1:
+        cur = conn.cursor()
+        # create table one by one
+        for i, request_status in enumerate(request_statuses):
+            cur.execute(insertrequestcommand.format(message.from_user, message.text))
+        cur.close()
+        # commit the changes
+        conn.commit()
+    return -1
