@@ -87,10 +87,19 @@ def echo_all(message):
             markup.add(itembtn1, itembtn2, itembtn3)
             if ins_res == -1:
                 task = bot.reply_to(message, 'Спасибо за вопрос! Мы постараемся ответить Вам как можно скорее.',
-                            reply_markup=markup)
+                                    reply_markup=markup)
                 result = task.wait()
             else:
                 result = ins_res
+    else:
+        markup = types.ReplyKeyboardMarkup(row_width=1)
+        itembtn1 = types.KeyboardButton('Помочь с ремонтом')
+        itembtn2 = types.KeyboardButton('Показать контактную информацию')
+        itembtn3 = types.KeyboardButton('Связаться с менеджером')
+        markup.add(itembtn1, itembtn2, itembtn3)
+        task = bot.reply_to(message, 'Я не знаю что это такое(',
+                            reply_markup=markup)
+        result = task.wait()
     print(result)
 
 
