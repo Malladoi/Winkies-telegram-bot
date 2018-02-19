@@ -76,6 +76,7 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     print(message.reply_to_message)
+    print(bot.get_me)
     result = bot.get_me
     if message.from_user.is_bot is False and message.reply_to_message is not None:
         if message.reply_to_message.text == 'Что Вы хотели узнать?':
@@ -92,6 +93,8 @@ def echo_all(message):
             else:
                 result = ins_res
     else:
+        if message.photo is not None:
+            print('photo')
         markup = types.ReplyKeyboardMarkup(row_width=1)
         itembtn1 = types.KeyboardButton('Помочь с ремонтом')
         itembtn2 = types.KeyboardButton('Показать контактную информацию')
