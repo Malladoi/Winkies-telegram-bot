@@ -93,8 +93,6 @@ def echo_all(message):
             else:
                 result = ins_res
     else:
-        if message.photo is not None:
-            print('photo')
         markup = types.ReplyKeyboardMarkup(row_width=1)
         itembtn1 = types.KeyboardButton('Помочь с ремонтом')
         itembtn2 = types.KeyboardButton('Показать контактную информацию')
@@ -104,6 +102,12 @@ def echo_all(message):
                             reply_markup=markup)
         result = task.wait()
     print(result)
+
+
+# Handles all sent documents and audio files
+@bot.message_handler(content_types=['document', 'audio', 'photo'])
+def handle_docs_audio(message):
+    bot.reply_to(message, 'media')
 
 
 bot.polling(none_stop=True)
